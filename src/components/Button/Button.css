@@ -1,0 +1,13 @@
+.button{
+  padding: 5px 10px;
+  border: 1px solid green;
+  background: transparent;
+  color: green;
+  cursor: pointer;
+}
+
+.button:hover{
+  background: green;
+  color: white;
+  transition: background .3s linear;
+}
