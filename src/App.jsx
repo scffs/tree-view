@@ -128,9 +128,9 @@ const App = () => {
                         {renderNode(tree)}
                     </ul>
                     <div className='buttons-group'>
-                        <Button onClick={addNode} text='Add node'/>
-                        <Button onClick={removeNode} text='Remove Node' />
-                        <Button onClick={editNode} text='Edit Node' />
+                        <Button onClick={addNode} text='Add'/>
+                        <Button onClick={removeNode} text='Remove' />
+                        <Button onClick={editNode} text='Edit' />
                         <Button onClick={resetNode} text='Reset' />
                     </div>
                 </div>
