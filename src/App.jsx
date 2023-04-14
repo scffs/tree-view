@@ -7,7 +7,7 @@ import Footer from './components/Footer/Footer.jsx';
 
 const App = () => {
     const [selectedNode, setSelectedNode] = useState(null);
-    const [nodeCount, setNodeCount] = useState(0);
+    const [nodeCount, setNodeCount] = useState(5);
 
     const baseTree = {
         id: 1,
@@ -28,7 +28,7 @@ const App = () => {
     const [tree, setTree] = useState(baseTree);
 
     const addNode = () => {
-        const newNode = { name: `New Node ${nodeCount}`, children: [] };
+        const newNode = { name: `New Node ${nodeCount}`, children: [], id: nodeCount + 1 };
 
         if (!selectedNode) {
             setTree((prevState) => ({
@@ -54,27 +54,28 @@ const App = () => {
     };
 
     const removeNode = () => {
-        if (!selectedNode) return null;
+        if (!selectedNode) return;
 
-        setTree((prevState) => {
-            if (prevState.id === selectedNode.id) {
-                return baseTree;
-            } else {
-                return {
-                    ...prevState,
-                    children: prevState.children.map((child) =>
-                        child.id === selectedNode.id
-                            ? null
-                            : {
-                                ...child,
-                                children: child.children.filter((grandChild) => grandChild.id !== selectedNode.id),
-                            }
-                    ).filter((child) => child !== null),
-                };
+        const removeNodeFromSubtree = (subtree) => {
+            if (subtree.id === selectedNode.id) {
+                return null; // remove node
             }
-        });
+
+            return {
+                ...subtree,
+                children: subtree.children
+                    .map((child) => removeNodeFromSubtree(child))
+                    .filter((child) => child !== null),
+            };
+        };
+
+        setTree((prevState) => removeNodeFromSubtree(prevState));
         setSelectedNode(null);
     };
+
+
+
+
 
 
     const editNode = () => {
@@ -125,6 +126,16 @@ const App = () => {
                     <ul className='node-list'>
                         {renderNode(tree)}
                     </ul>
+                    <div>
+                        {selectedNode && (
+                            <div>
+                                <h2>Selected Node</h2>
+                                <p>Name: {selectedNode.name}</p>
+                                <p>Children: {selectedNode.children.length}</p>
+                                <p>ID: {selectedNode.id}</p>
+                            </div>
+                        )}
+                    </div>
                     <div className='buttons-group'>
                         <Button onClick={addNode} text='Add'/>
                         <Button onClick={removeNode} text='Remove' />
