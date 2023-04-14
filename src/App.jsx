@@ -54,7 +54,7 @@ const App = () => {
     };
 
     const removeNode = () => {
-        if (!selectedNode) return;
+        if (!selectedNode || selectedNode.id === 1) return;
 
         const removeNodeFromSubtree = (subtree) => {
             if (subtree.id === selectedNode.id) {
@@ -72,11 +72,6 @@ const App = () => {
         setTree((prevState) => removeNodeFromSubtree(prevState));
         setSelectedNode(null);
     };
-
-
-
-
-
 
     const editNode = () => {
         if (!selectedNode) return null;
@@ -113,6 +108,8 @@ const App = () => {
     );
 
     const resetNode = () => {
+        setNodeCount(5);
+        setSelectedNode(null);
         return setTree(baseTree)
     }
 
