@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react';
+import React, { memo, useState, useCallback } from 'react';
 
 import './App.css';
 
@@ -96,17 +96,10 @@ const App = () => {
         }
     };
 
-    const selectNode = (node) => {
+    const selectNode = useCallback((node) => {
         setSelectedNode(node);
-    };
-    // Сейчас если добавить console.log в функцию renderNode,
-    // то будет видно, что при изменении названия одной ноды, эта функция вызывается для всех нод.
-    const RenderNode = memo(({ node, selectNode }) => (
-        <li key={node.name}>
-            <span onClick={() => selectNode(node)}>{node.name}</span>
-            {node.children.length > 0 && <ul>{node.children.map(child => <RenderNode key={child.name} node={child} selectNode={selectNode} />)}</ul>}
-        </li>
-    ));
+    },[]);
+
 
     const resetNode = () => {
         setNodeCount(5);
@@ -146,5 +139,17 @@ const App = () => {
         </div>
     );
 }
+
+    // Сейчас если добавить console.log в функцию renderNode,
+    // то будет видно, что при изменении названия одной ноды, эта функция вызывается для всех нод.
+    const RenderNode = memo(({ node, selectNode }) => {
+        console.log('render', node.name);
+        
+        return (
+        <li key={node.name}>
+            <span onClick={() => selectNode(node)}>{node.name}</span>
+            {node.children.length > 0 && <ul>{node.children.map(child => <RenderNode key={child.name} node={child} selectNode={selectNode} />)}</ul>}
+        </li>
+    )});
 
 export default App;
