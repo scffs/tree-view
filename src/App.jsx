@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 
 import './App.css';
 
@@ -99,13 +99,14 @@ const App = () => {
     const selectNode = (node) => {
         setSelectedNode(node);
     };
-
-    const renderNode = (node) => (
+    // Сейчас если добавить console.log в функцию renderNode,
+    // то будет видно, что при изменении названия одной ноды, эта функция вызывается для всех нод.
+    const RenderNode = memo(({ node, selectNode }) => (
         <li key={node.name}>
             <span onClick={() => selectNode(node)}>{node.name}</span>
-            {node.children.length > 0 && <ul>{node.children.map(renderNode)}</ul>}
+            {node.children.length > 0 && <ul>{node.children.map(child => <RenderNode key={child.name} node={child} selectNode={selectNode} />)}</ul>}
         </li>
-    );
+    ));
 
     const resetNode = () => {
         setNodeCount(5);
@@ -121,7 +122,7 @@ const App = () => {
                 </div>
                 <div className='box-bottom'>
                     <ul className='node-list'>
-                        {renderNode(tree)}
+                        <RenderNode node={tree} selectNode={selectNode} />
                     </ul>
                     <div>
                         {selectedNode && (
