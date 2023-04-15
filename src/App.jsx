@@ -1,4 +1,4 @@
-import React, { memo, useState,useCallback } from 'react';
+import React, { memo, useState, useCallback } from 'react';
 
 import './App.css';
 
@@ -144,6 +144,7 @@ const App = () => {
     // то будет видно, что при изменении названия одной ноды, эта функция вызывается для всех нод.
     const RenderNode = memo(({ node, selectNode }) => {
         console.log('render', node.name);
+        
         return (
         <li key={node.name}>
             <span onClick={() => selectNode(node)}>{node.name}</span>
