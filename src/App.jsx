@@ -5,10 +5,20 @@ import './App.css';
 import Button from './components/Button/Button.jsx';
 import Footer from './components/Footer/Footer.jsx';
 
-const App = () => {
-    const [selectedNode, setSelectedNode] = useState(null);
-    const [nodeCount, setNodeCount] = useState(5);
+// Сейчас если добавить console.log в функцию renderNode,
+// то будет видно, что при изменении названия одной ноды, эта функция вызывается для всех нод.
+const RenderNode = memo(({ node, selectNode }) => {
+    console.log('render', node.name);
 
+    return (
+        <li key={node.name}>
+            <span onClick={() => selectNode(node)}>{node.name}</span>
+            {node.children.length > 0 && <ul>{node.children.map(child => <RenderNode key={child.name} node={child} selectNode={selectNode} />)}</ul>}
+        </li>
+    )
+});
+
+const App = () => {
     const baseTree = {
         id: 1,
         name: 'Node 1',
@@ -24,6 +34,23 @@ const App = () => {
             { id: 5, name: 'Node 5', children: [] },
         ]
     };
+    const getNodeCount = (tree) => {
+        let count = 1;
+
+        if (!tree.children) {
+            return count;
+        }
+
+        for (let child of tree.children) {
+            count += getNodeCount(child);
+        }
+
+        return count;
+    };
+
+    const [selectedNode, setSelectedNode] = useState(null);
+
+    const [nodeCount, setNodeCount] = useState(getNodeCount(baseTree));
 
     const [tree, setTree] = useState(baseTree);
 
@@ -139,17 +166,5 @@ const App = () => {
         </div>
     );
 }
-
-    // Сейчас если добавить console.log в функцию renderNode,
-    // то будет видно, что при изменении названия одной ноды, эта функция вызывается для всех нод.
-    const RenderNode = memo(({ node, selectNode }) => {
-        console.log('render', node.name);
-        
-        return (
-        <li key={node.name}>
-            <span onClick={() => selectNode(node)}>{node.name}</span>
-            {node.children.length > 0 && <ul>{node.children.map(child => <RenderNode key={child.name} node={child} selectNode={selectNode} />)}</ul>}
-        </li>
-    )});
 
 export default App;
