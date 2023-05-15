@@ -1,4 +1,3 @@
-# Known problems
-
-- Adding child elements to the root (Node 1) node does't work (you can add it only at the first render, when no element has been selected yet)
-- When deleting a child, the entire tree may be deleted as well `(**LOOKS LIKE FIXED**)`
+# Tree view
+- Задание
+![image](https://github.com/scffs/tree-view/assets/67464545/8d62c570-6463-400d-b00e-a56a939c527a)
