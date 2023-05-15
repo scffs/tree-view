@@ -5,8 +5,6 @@ import './App.css';
 import Button from './components/Button/Button.jsx';
 import Footer from './components/Footer/Footer.jsx';
 
-// Сейчас если добавить console.log в функцию renderNode,
-// то будет видно, что при изменении названия одной ноды, эта функция вызывается для всех нод.
 const RenderNode = memo(({ node, selectNode }) => {
     console.log('render', node.name);
 
