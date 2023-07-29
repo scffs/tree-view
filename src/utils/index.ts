@@ -23,7 +23,8 @@ export const removeNodeFromSubtree = (
   selectedNode: ITreeNode,
 ): ITreeNode => {
   if (subtree.id === selectedNode.id) {
-    return {} as ITreeNode;
+    // @ts-ignore
+    return null;
   }
 
   return {

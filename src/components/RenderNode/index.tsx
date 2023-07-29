@@ -7,6 +7,8 @@ interface RenderNodeProps {
   selectNode: (node: ITreeNode) => void;
 }
 
+const areNodesEqual = (prevProps: RenderNodeProps, nextProps: RenderNodeProps) => prevProps.node === nextProps.node && prevProps.selectNode === nextProps.selectNode;
+
 const RenderNode: FC<RenderNodeProps> = ({ node, selectNode }) => {
   console.log('render', node.name);
 
@@ -14,13 +16,29 @@ const RenderNode: FC<RenderNodeProps> = ({ node, selectNode }) => {
     selectNode(node);
   }, [node, selectNode]);
 
+  const handleKeyDown = useCallback(
+    (event: React.KeyboardEvent<HTMLSpanElement>) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        selectNode(node);
+      }
+    },
+    [node, selectNode],
+  );
+
   return (
-    <li key={node.name}>
-      <span role='button' onClick={handleNodeClick}>{node.name}</span>
+    <li key={node.id}>
+      <span
+        role='button'
+        tabIndex={0}
+        onClick={handleNodeClick}
+        onKeyDown={handleKeyDown}
+      >
+        {node.name}
+      </span>
       {node.children?.length > 0 && (
         <ul>
-          {node.children?.map((child) => (
-            <RenderNode key={child.name} node={child} selectNode={selectNode} />
+          {node.children.map((child) => (
+            <RenderNode key={child.id} node={child} selectNode={selectNode} />
           ))}
         </ul>
       )}
@@ -28,4 +46,4 @@ const RenderNode: FC<RenderNodeProps> = ({ node, selectNode }) => {
   );
 };
 
-export default memo(RenderNode);
+export default memo(RenderNode, areNodesEqual);

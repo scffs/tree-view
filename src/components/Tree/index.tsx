@@ -34,14 +34,14 @@ const Tree = () => {
     };
 
     if (!selectedNode) {
-      setTree((prevState) => ({
-        ...prevState,
-        children: [...prevState.children, newNode],
+      setTree((prevTree) => ({
+        ...prevTree,
+        children: [...prevTree.children, newNode],
       }));
     } else {
-      setTree((prevState) => ({
-        ...prevState,
-        children: updateChild(prevState.children, selectedNode, (child) => ({
+      setTree((prevTree) => ({
+        ...prevTree,
+        children: updateChild(prevTree.children, selectedNode, (child) => ({
           ...child,
           children: [...child.children, newNode],
         })),
@@ -79,7 +79,7 @@ const Tree = () => {
   return (
     <div>
       <ul className='node-list'>
-        <RenderNode node={tree} selectNode={selectNode} />
+        <RenderNode key={tree.id} node={tree} selectNode={selectNode} />
       </ul>
       <div>
         {selectedNode && <TreeNode selectedNode={selectedNode} />}
