@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, memo, useCallback } from 'react';
 
 import { ITreeNode } from '../TreeNode';
 
@@ -10,9 +10,9 @@ interface RenderNodeProps {
 const RenderNode: FC<RenderNodeProps> = ({ node, selectNode }) => {
   console.log('render', node.name);
 
-  const handleNodeClick = () => {
+  const handleNodeClick = useCallback(() => {
     selectNode(node);
-  };
+  }, [node, selectNode]);
 
   return (
     <li key={node.name}>
@@ -28,4 +28,4 @@ const RenderNode: FC<RenderNodeProps> = ({ node, selectNode }) => {
   );
 };
 
-export default RenderNode;
+export default memo(RenderNode);

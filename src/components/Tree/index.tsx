@@ -11,6 +11,8 @@ import {
   updateChild,
 } from '../../utils';
 
+import { baseTree } from './baseTree';
+
 interface ITreeNode {
   id: number;
   name: string;
@@ -18,29 +20,15 @@ interface ITreeNode {
 }
 
 const Tree = () => {
-  const baseTree: ITreeNode = {
-    id: 1,
-    name: 'Node 1',
-    children: [
-      {
-        id: 2,
-        name: 'Node 2',
-        children: [
-          { id: 3, name: 'Node 3', children: [] },
-          { id: 4, name: 'Node 4', children: [] },
-        ],
-      },
-      { id: 5, name: 'Node 5', children: [] },
-    ],
-  };
-
   const [selectedNode, setSelectedNode] = useState<ITreeNode | null>(null);
   const [nodeCount, setNodeCount] = useState<number>(getNodeCount(baseTree));
   const [tree, setTree] = useState<ITreeNode>(baseTree);
 
   const addNode = () => {
+    setNodeCount((count) => count + 1);
+
     const newNode: ITreeNode = {
-      name: `New Node ${nodeCount}`,
+      name: `New Node ${nodeCount + 1}`,
       children: [],
       id: nodeCount + 1,
     };
@@ -59,7 +47,6 @@ const Tree = () => {
         })),
       }));
     }
-    setNodeCount((count) => count + 1);
   };
 
   const removeNode = () => {

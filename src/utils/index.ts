@@ -14,7 +14,7 @@ export const updateChild = (
   children: ITreeNode[],
   selectedNode: ITreeNode,
   updateFn: UpdateFunction,
-): ITreeNode[] => children.map((child) => (child === selectedNode
+): ITreeNode[] => children?.map((child) => (child === selectedNode
   ? updateFn(child)
   : { ...child, children: updateChild(child.children, selectedNode, updateFn) }));
 

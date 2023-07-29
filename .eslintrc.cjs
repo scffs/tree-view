@@ -34,6 +34,7 @@ module.exports = {
       rules: {
         'linebreak-style': 'off',
         'no-alert': 'off',
+        'import/prefer-default-export': 'off',
         'no-console': 'off',
         '@typescript-eslint/no-misused-promises': 'off',
         'react/jsx-props-no-spreading': 'off',
