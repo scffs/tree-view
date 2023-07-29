@@ -10,12 +10,16 @@ interface RenderNodeProps {
 const RenderNode: FC<RenderNodeProps> = ({ node, selectNode }) => {
   console.log('render', node.name);
 
+  const handleNodeClick = () => {
+    selectNode(node);
+  };
+
   return (
     <li key={node.name}>
-      <span onClick={() => selectNode(node)}>{node.name}</span>
-      {node.children.length > 0 && (
+      <span role='button' onClick={handleNodeClick}>{node.name}</span>
+      {node.children?.length > 0 && (
         <ul>
-          {node.children.map((child) => (
+          {node.children?.map((child) => (
             <RenderNode key={child.name} node={child} selectNode={selectNode} />
           ))}
         </ul>

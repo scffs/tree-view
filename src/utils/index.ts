@@ -29,7 +29,7 @@ export const removeNodeFromSubtree = (
   return {
     ...subtree,
     children: subtree.children
-      .map((child) => removeNodeFromSubtree(child, selectedNode))
+      ?.map((child) => removeNodeFromSubtree(child, selectedNode))
       .filter((child) => child !== null),
   };
 };
@@ -44,6 +44,6 @@ export const findAndReplace = (
   }
   return {
     ...node,
-    children: node.children.map((child) => findAndReplace(child, selectedNode, newName)),
+    children: node.children?.map((child) => findAndReplace(child, selectedNode, newName)),
   };
 };

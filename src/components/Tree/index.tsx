@@ -75,10 +75,7 @@ const Tree = () => {
     const newName = prompt('Enter new node name', selectedNode.name);
 
     if (newName) {
-      const newTree = { ...tree };
-
-      findAndReplace(newTree, selectedNode, newName);
-      setTree(newTree);
+      setTree((prevTree) => findAndReplace(prevTree, selectedNode, newName));
     }
   };
 
